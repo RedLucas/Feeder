@@ -1,0 +1,28 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.aggregator_feed.teaser
+  module:
+    - aggregator
+id: aggregator_feed.aggregator_feed.teaser
+targetEntityType: aggregator_feed
+bundle: aggregator_feed
+mode: teaser
+content:
+  feed_icon:
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  items:
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  checked: true
+  description: true
+  image: true
+  link: true
+  more_link: true

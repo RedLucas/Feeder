@@ -1,0 +1,8 @@
+name: Feeder
+type: module
+description: 'Add a block that will display content on the screen from an RSS feed.'
+package: Custom
+version: 1.0.0
+core: 8.x
+dependencies:
+  - aggregator

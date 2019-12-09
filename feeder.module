@@ -1,0 +1,64 @@
+<?php
+
+use Drupal\Component\Utility\Html;
+
+/**
+ * Implements hook_theme_suggestions_aggregator_feed().
+ */
+function feeder_theme_suggestions_aggregator_feed(array $variables) {
+  return _feeder_add_view_mode_theme_hook($variables);
+}
+
+/**
+ * Implements hook_theme_suggestions_aggregator_item().
+ */
+function feeder_theme_suggestions_aggregator_item(array $variables) {
+  return _feeder_add_view_mode_theme_hook($variables);
+}
+
+/**
+ * Add a view_mode theme suggestion to the aggregator item and feed.
+ *
+ * @param array $variables
+ *   The variables to be passed to the template.
+ * @param array $theme_suggestions
+ *   An array of strings to help alter varie the display of the feed.
+ *
+ * @return array
+ *   The theme suggestions array, with an additional one with the view mode.
+ */
+function _feeder_add_view_mode_theme_hook(array $variables, array $theme_suggestions = []): array {
+  $theme_suggestions[] = $variables['theme_hook_original'] . '__' . $variables['elements']['#view_mode'];
+  return $theme_suggestions;
+}
+
+/**
+ * Implements hook_preprocess_aggregator_feed().
+ */
+function feeder_preprocess_aggregator_feed(array &$variables) {
+  $variables = _feeder_add_view_mode_class($variables);
+}
+
+/**
+ * Implements hook_preprocess_aggregator_item().
+ */
+function feeder_preprocess_aggregator_item(array &$variables) {
+  $variables = _feeder_add_view_mode_class($variables);
+  ksm($variables);
+}
+
+/**
+ * Add a css class to the root attributes of the aggregator item and feed.
+ *
+ * @param array $variables
+ *   The preprocess variables array.
+ *
+ * @return array
+ *   The preprocess variables array with the view mode class added.
+ */
+function _feeder_add_view_mode_class(array $variables): array {
+  $variables['attributes'] = $variables['attributes'] ?? [];
+  $variables['attributes']['class'] = $variables['attributes']['class'] ?? [];
+  $variables['attributes']['class'][] = Html::getClass($variables['theme_hook_original'] . '--' . $variables['elements']['#view_mode']);
+  return $variables;
+}

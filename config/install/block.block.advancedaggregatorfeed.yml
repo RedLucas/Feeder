@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - feeder
+  theme:
+    - bartik
+id: advancedaggregatorfeed
+theme: bartik
+region: content
+weight: 0
+provider: null
+plugin: feeder_block
+settings:
+  id: feeder_block
+  label: 'Advanced aggregator feed'
+  provider: feeder
+  label_display: visible
+  block_count: '2'
+  feed: '1'
+  display_style: teaser
+visibility: {  }
