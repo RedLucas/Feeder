@@ -7,12 +7,25 @@ use Drupal\aggregator\Entity\Feed;
  */
 function feeder_install() {
   // Add the Acquia dev news feed as a aggregator feed for simplicity.
-  Feed::create([
+  $feed = Feed::create([
     'title' => 'Acquia dev news',
     'url' => 'https://dev.acquia.com/rss.xml',
     'refresh' => 3600,
-  ])->save();
-
+  ]);
+  $feed->save();
+  // The feed ID of the block seems to always be a string, so let's be safe.
+  $feed_id = (string) $feed->id();
+  // We just installed a block, but we shouldn't assume the feed is ID 1.
+  $block_from_config = \Drupal::entityTypeManager()->getStorage('block')->load('advancedaggregatorfeed');
+  // Let's grab all the block settings.
+  $block_settings = $block_from_config->get('settings');
+  // Lets set the feed to the correct ID, but lets make sure we don't lose 
+  // anything.
+  $block_from_config
+    ->set('settings', [
+      'feed' => $feed_id,
+    ] + $block_settings)
+    ->save();
   // Work around the fact that there hasn't been a new post to the dev acquia
   // blog in quite a while.
   $aggregator_settings = \Drupal::configFactory()->getEditable('aggregator.settings');
