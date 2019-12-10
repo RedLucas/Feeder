@@ -44,7 +44,6 @@ function feeder_preprocess_aggregator_feed(array &$variables) {
  */
 function feeder_preprocess_aggregator_item(array &$variables) {
   $variables = _feeder_add_view_mode_class($variables);
-  ksm($variables);
 }
 
 /**

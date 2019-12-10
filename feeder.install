@@ -16,5 +16,5 @@ function feeder_install() {
   // Work around the fact that there hasn't been a new post to the dev acquia
   // blog in quite a while.
   $aggregator_settings = \Drupal::configFactory()->getEditable('aggregator.settings');
-  $aggregator_settings->set('items.expire', 0)->save();
+  $aggregator_settings->set('items.expire', 0)->save(); 
 }
