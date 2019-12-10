@@ -7,7 +7,7 @@ dependencies:
     - bartik
 id: advancedaggregatorfeed
 theme: bartik
-region: content
+region: sidebar_first
 weight: 0
 provider: null
 plugin: feeder_block
