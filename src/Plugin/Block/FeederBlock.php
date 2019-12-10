@@ -8,6 +8,7 @@ use Drupal\aggregator\FeedStorageInterface;
 use Drupal\aggregator\ItemStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\aggregator\Plugin\Block\AggregatorFeedBlock;
+use Drupal\Core\Entity\EntityDisplayRepositoryInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -21,7 +22,21 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class FeederBlock extends AggregatorFeedBlock {
 
-    /**
+  /**
+   * The entity type manager.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManager
+   */
+  protected $entityTypeManager;
+
+  /**
+   * The entity display repository.
+   *
+   * @var \Drupal\Core\Entity\EntityDisplayRepository
+   */
+  protected $entityDisplayRepository;
+
+  /**
    * Constructs an FeederBlock object.
    *
    * @param array $configuration
@@ -36,10 +51,13 @@ class FeederBlock extends AggregatorFeedBlock {
    *   The entity storage for feed items.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   The entity type manager.
+   * @param \Drupal\Core\Entity\EntityDisplayRepositoryInterface $entity_display_repository
+   *   The entity display repository.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, FeedStorageInterface $feed_storage, ItemStorageInterface $item_storage, EntityTypeManagerInterface $entity_type_manager) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, FeedStorageInterface $feed_storage, ItemStorageInterface $item_storage, EntityTypeManagerInterface $entity_type_manager, EntityDisplayRepositoryInterface $entity_display_repository) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $feed_storage, $item_storage);
     $this->entityTypeManager = $entity_type_manager;
+    $this->entityDisplayRepository = $entity_display_repository;
 
   }
 
@@ -53,7 +71,8 @@ class FeederBlock extends AggregatorFeedBlock {
       $plugin_definition,
       $container->get('entity_type.manager')->getStorage('aggregator_feed'),
       $container->get('entity_type.manager')->getStorage('aggregator_item'),
-      $container->get('entity_type.manager')
+      $container->get('entity_type.manager'),
+      $container->get('entity_display.repository')
     );
   }
 
@@ -73,6 +92,7 @@ class FeederBlock extends AggregatorFeedBlock {
     $form = parent::blockForm($form, $form_state);
     $form['display_style'] = [
       '#type' => 'select',
+      '#title' => $this->t('The View mode to use for this feed'),
       '#options' => $this->entityDisplayRepository->getViewModeOptions('aggregator_feed'),
       '#default_value' => $this->configuration['display_style'],
     ];
