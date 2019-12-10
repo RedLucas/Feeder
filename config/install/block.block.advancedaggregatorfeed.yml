@@ -18,5 +18,5 @@ settings:
   label_display: visible
   block_count: '5'
   feed: '1'
-  display_style: teaser
+  display_style: summary
 visibility: {  }
