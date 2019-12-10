@@ -92,7 +92,7 @@ class FeederBlock extends AggregatorFeedBlock {
     $form = parent::blockForm($form, $form_state);
     $form['display_style'] = [
       '#type' => 'select',
-      '#title' => $this->t('')
+      '#title' => $this->t('The View mode to use for this feed'),
       '#options' => $this->entityDisplayRepository->getViewModeOptions('aggregator_feed'),
       '#default_value' => $this->configuration['display_style'],
     ];
