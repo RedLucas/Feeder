@@ -30,4 +30,7 @@ function feeder_install() {
   // blog in quite a while.
   $aggregator_settings = \Drupal::configFactory()->getEditable('aggregator.settings');
   $aggregator_settings->set('items.expire', 0)->save(); 
+  // We should admittedly probably use a more fine-grained solution than 
+  // running all jobs, but we'll survive for now.
+  \Drupal::service('cron')->run();
 }
