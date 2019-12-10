@@ -57,7 +57,7 @@ class FeederBlock extends AggregatorFeedBlock {
   public function __construct(array $configuration, $plugin_id, $plugin_definition, FeedStorageInterface $feed_storage, ItemStorageInterface $item_storage, EntityTypeManagerInterface $entity_type_manager, EntityDisplayRepositoryInterface $entity_display_repository) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $feed_storage, $item_storage);
     $this->entityTypeManager = $entity_type_manager;
-    $this->entityDisplayManager = $entity_display_repository;
+    $this->entityDisplayRepository = $entity_display_repository;
 
   }
 
